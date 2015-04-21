@@ -6,6 +6,7 @@ def open_file(path):
     """
     Open and read an Excel file
     """
+    rowList = list()
     workbook = xlrd.open_workbook(path)
     worksheet = workbook.sheet_by_name('Rev4')
     num_rows = worksheet.nrows - 1
@@ -14,15 +15,18 @@ def open_file(path):
     while curr_row < num_rows:
         curr_row += 1
         row = worksheet.row(curr_row)
-        print 'Row:', curr_row
+        #print 'Row:', curr_row
         curr_cell = -1
+        cellList = []
         while curr_cell < num_cells:
             curr_cell += 1
             # Cell Types: 0=Empty, 1=Text, 2=Number, 3=Date, 4=Boolean, 5=Error, 6=Blank
             cell_type = worksheet.cell_type(curr_row, curr_cell)
             cell_value = worksheet.cell_value(curr_row, curr_cell)
-            print '	', cell_type, ':', cell_value
-    
+            #print '	', cell_type, ':', cell_value
+            cellList.append(cell_value)
+        rowList.append(cellList)
+    return rowList
 #----------------------------------------------------------------------
 def DBConnect(host,user,passwd,db):
     # Connect to the database
@@ -55,4 +59,10 @@ def DBConnect(host,user,passwd,db):
 #----------------------------------------------------------------------
 if __name__ == "__main__":
     path = "/home/cnd_user/dev/53.xlsx"
-    open_file(path)
+    testList = open_file(path)
+    cnt = 0
+    for row in testList:
+        cnt+=1
+        print str(cnt) 
+        for cellVal in row:
+            print " -- " + cellVal
