@@ -31,10 +31,6 @@ def open_file(path):
                                 end_colx=2)
  
 #----------------------------------------------------------------------
-if __name__ == "__main__":
-    path = "/home/cnd_user/dev/53.xlsx"
-    open_file(path)
-
 def DBConnect(host,user,passwd,db)
     # Connect to the database
     connection = pymysql.connect(host='localhost',
@@ -62,3 +58,8 @@ def DBConnect(host,user,passwd,db)
             print(result)
     finally:
         connection.close()
+        
+#----------------------------------------------------------------------
+if __name__ == "__main__":
+    path = "/home/cnd_user/dev/53.xlsx"
+    open_file(path)
