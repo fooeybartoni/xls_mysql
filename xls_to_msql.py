@@ -6,32 +6,25 @@ def open_file(path):
     """
     Open and read an Excel file
     """
-    book = xlrd.open_workbook(path)
- 
-    # print number of sheets
-    print book.nsheets
- 
-    # print sheet names
-    print book.sheet_names()
- 
-    # get the first worksheet
-    first_sheet = book.sheet_by_index(0)
- 
-    # read a row
-    print first_sheet.row_values(0)
- 
-    # read a cell
-    cell = first_sheet.cell(0,0)
-    print cell
-    print cell.value
- 
-    # read a row slice
-    print first_sheet.row_slice(rowx=0,
-                                start_colx=0,
-                                end_colx=2)
- 
+    workbook = xlrd.open_workbook(path)
+    worksheet = workbook.sheet_by_name('Rev4')
+    num_rows = worksheet.nrows - 1
+    num_cells = worksheet.ncols - 1
+    curr_row = -1
+    while curr_row < num_rows:
+        curr_row += 1
+        row = worksheet.row(curr_row)
+        print 'Row:', curr_row
+        curr_cell = -1
+        while curr_cell < num_cells:
+            curr_cell += 1
+            # Cell Types: 0=Empty, 1=Text, 2=Number, 3=Date, 4=Boolean, 5=Error, 6=Blank
+            cell_type = worksheet.cell_type(curr_row, curr_cell)
+            cell_value = worksheet.cell_value(curr_row, curr_cell)
+            print '	', cell_type, ':', cell_value
+    
 #----------------------------------------------------------------------
-def DBConnect(host,user,passwd,db)
+def DBConnect(host,user,passwd,db):
     # Connect to the database
     connection = pymysql.connect(host='localhost',
                                 user='root',
