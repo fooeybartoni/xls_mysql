@@ -60,9 +60,22 @@ def DBConnect(host,user,passwd,db):
 if __name__ == "__main__":
     path = "/home/cnd_user/dev/53.xlsx"
     testList = open_file(path)
-    cnt = 0
+    row_cnt = 0
+    out_str = ''
     for row in testList:
-        cnt+=1
-        print str(cnt) 
+        row_cnt += 1
+        out_str += "\nRow " + str(row_cnt) + "\n" 
+        col_cnt = 0 
         for cellVal in row:
-            print " -- " + cellVal
+            col_cnt+=1
+            inVal = cellVal
+            if cellVal and cellVal.strip():
+                inVal = cellVal
+            else:
+                inVal = "***Blank No Data***"
+            out_str += (("\tColumn " + str(col_cnt) +" -- "+inVal+"\n"))
+    print out_str
+    filename = "/home/cnd_user/dev/test_data1.txt"    
+    target = open(filename, 'w')
+    target.write(out_str.encode('utf8'))
+    target.close()
